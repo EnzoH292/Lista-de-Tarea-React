@@ -1,13 +1,32 @@
 import ItemTarea from "./ItemTarea";
 import ListaTareas from "./ListaTareas";
 import { Form, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Formulario = () => {
   //Mayoria de la lógica
 
+  const tareaslocalStorage = JSON.parse(localStorage.getItem('arrayTareaKey')) || [];
   const [tarea, setTarea] = useState("");
-  const [arrayTarea, setArrayTarea] = useState([]);
+  const [arrayTarea, setArrayTarea] = useState(tareaslocalStorage);
+
+  //***ciclo de vida***
+  // useEffect(()=>{
+  //   //Se ejecuta en montaje y actualizacion
+  //   console.log("prueba de ciclo de vida")
+  // })
+  // useEffect(()=>{
+  //   //Se ejecuta en montaje pero no en actualizacion
+  //   console.log("prueba de ciclo de vida")
+  // }, [])
+  useEffect(()=>{
+    //Se ejecuta en montaje y en actualizacion del que se le indique en la tarea
+    console.log("prueba de ciclo de vida")
+    //guardar en el localstorage
+    localStorage.setItem('arrayTareaKey', JSON.stringify(arrayTarea))
+  }, [arrayTarea])
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
